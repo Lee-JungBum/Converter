@@ -25,4 +25,22 @@ public class AppTest
     {
         Assertions.assertTrue(Converter.numeralSystemCheck("1111",numeralSystem));
     }
+    @Test
+    @DisplayName("2진법 재확인")
+    void binaryTypeCheck()
+    {
+        Assertions.assertTrue(Converter.numeralSystemCheck("000",2));
+    }
+    @Test
+    @DisplayName("8진법 재확인")
+    void octalTypeCheck()
+    {
+        Assertions.assertTrue(Converter.numeralSystemCheck("234567",8));
+    }
+    @Test
+    @DisplayName("16진법 재확인")
+    void hexadecimalTypeCheck()
+    {
+        Assertions.assertTrue(Converter.numeralSystemCheck("abc24d",16));
+    }
 }
