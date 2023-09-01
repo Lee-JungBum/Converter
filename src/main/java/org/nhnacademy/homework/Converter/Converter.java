@@ -36,7 +36,7 @@ public class Converter {
                 i++;
                 continue;
             }
-            answer += ((int) Math.pow(numeralSystem, i - 1) * (c - minus));
+            answer += ((long) Math.pow(numeralSystem, i - 1) * (c - minus));
 //            System.out.println("answer = "+answer);
 
             i++;
@@ -93,17 +93,14 @@ public class Converter {
     }
 
     private static boolean hexadecimalCheck(String value) {
-        System.out.println("16");
         return Pattern.matches("^([0-9]*|[a-f]*|[A-F]*)+$", value);
     }
 
     private static boolean octalCheck(String value) {
-        System.out.println("8");
         return Pattern.matches("^[0-7]+$", value);
     }
 
     private static boolean binaryCheck(String value) {
-        System.out.println("2");
         return Pattern.matches("^[0-1]+$", value);
     }
 }
