@@ -43,4 +43,23 @@ public class AppTest
     {
         Assertions.assertTrue(Converter.numeralSystemCheck("abc24d",16));
     }
+    @Test
+    @DisplayName("2진법 틀린경우")
+    void binaryTypeCheck2()
+    {
+        Assertions.assertFalse(Converter.numeralSystemCheck("00300",2));
+    }
+    @Test
+    @DisplayName("8진법 틀린경우")
+    void octalTypeCheck2()
+    {
+        Assertions.assertFalse(Converter.numeralSystemCheck("9999990",8));
+    }
+    @Test
+    @DisplayName("16진법 틀린경우")
+    void hexadecimalTypeCheck2()
+    {
+        Assertions.assertFalse(Converter.numeralSystemCheck("10000g",16));
+    }
+
 }
