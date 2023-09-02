@@ -8,7 +8,6 @@ public class Converter {
     private static Stack<Character> stack = new Stack<>();
 
     private Converter() {
-
     }
 
     public static long toDecimal(String value, int numeralSystem) {
@@ -23,7 +22,7 @@ public class Converter {
             char c = stack.pop();
             int minus = base(c);
             if (i == 1) {
-                if ((int) c - minus == 0) {
+                if (zeroCheck(c, minus)) {
                     i++;
                     continue;
                 }
@@ -32,7 +31,7 @@ public class Converter {
                 i++;
                 continue;
             }
-            if ((int) c - minus == 0) {
+            if ((zeroCheck(c,minus))) {
                 i++;
                 continue;
             }
@@ -103,4 +102,10 @@ public class Converter {
     private static boolean binaryCheck(String value) {
         return Pattern.matches("^[0-1]+$", value);
     }
+
+    private static boolean zeroCheck(int c, int minus) {
+        if (c - minus == 0) return true;
+        return false;
+    }
+
 }
