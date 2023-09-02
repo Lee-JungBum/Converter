@@ -1,8 +1,11 @@
 package org.nhnacademy.homework.Converter;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class Converter {
     private static Stack<Character> stack = new Stack<>();
@@ -31,7 +34,7 @@ public class Converter {
                 i++;
                 continue;
             }
-            if ((zeroCheck(c,minus))) {
+            if ((zeroCheck(c, minus))) {
                 i++;
                 continue;
             }
@@ -42,6 +45,32 @@ public class Converter {
 
         }
         return answer;
+    }
+
+    public static String toNumeral(int value, int numeralSystem) {
+        int quotient = value;
+        int remainder = 0;
+        Stack<Character> answer = new Stack<>();
+        if (!numeralSystemCheck(numeralSystem)) {
+            throw new IllegalArgumentException("올바르지 않은 값이 들어왔습니다");
+        }
+        while (quotient != 0) {
+            remainder = quotient % numeralSystem;
+            quotient = quotient / numeralSystem;
+//            System.out.println(quotient + " " + remainder);
+            answer.add(intToHexa(remainder));
+//            if(quotient==0)
+//            {
+//                remainder = quotient % numeralSystem;
+//                answer.add(intToHexa(remainder));
+//                break;
+//            }
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        while (!answer.isEmpty()) {
+            stringBuilder.append(answer.pop());
+        }
+        return stringBuilder.toString();
     }
 
     private static int base(Character c) {
@@ -84,10 +113,16 @@ public class Converter {
     }
 
     public static boolean numeralSystemCheck(String value, int numeralSystem) {
-        System.out.println(numeralSystem);
         if (numeralSystem == 2) return binaryCheck(value);
         else if (numeralSystem == 8) return octalCheck(value);
         else if (numeralSystem == 16) return hexadecimalCheck(value);
+        return false;
+    }
+
+    public static boolean numeralSystemCheck(int numeralSystem) {
+        System.out.println(numeralSystem);
+        if ((numeralSystem == 2 || numeralSystem == 8 || numeralSystem == 16))
+            return true;
         return false;
     }
 
@@ -108,4 +143,9 @@ public class Converter {
         return false;
     }
 
+    public static char intToHexa(int num) {
+        if (num < 10)
+            return (char) (num + '0');
+        return (char) (num - 10 + 'A');
+    }
 }
