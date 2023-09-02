@@ -60,5 +60,16 @@ public class AppTest {
         Assertions.assertFalse(Converter.numeralSystemCheck("10000g", 16));
     }
 
-
+    @Test
+    @DisplayName("int to hexa(<10)")
+    void intToHexaTest1()
+    {
+        Assertions.assertEquals('1',Converter.intToHexa(1));
+    }
+    @Test
+    @DisplayName("int to hexa(>10)")
+    void intToHexaTest2()
+    {
+        Assertions.assertEquals('A',Converter.intToHexa(10));
+    }
 }
