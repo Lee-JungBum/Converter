@@ -20,4 +20,20 @@ public class binaryToOctal {
 
         Assertions.assertEquals("12",Converter.binaryToOctal("01010"));
     }
+
+    @Test
+    @DisplayName("binaryToOctal Execption")
+    void binaryToOctal3()
+    {
+
+        Assertions.assertThrows(IllegalArgumentException.class,()->Converter.binaryToOctal("aa"));
+    }
+
+    @Test
+    @DisplayName("binaryToOctal 0")
+    void binaryToOctal4()
+    {
+
+        Assertions.assertEquals("0",Converter.binaryToOctal("00"));
+    }
 }
