@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 import java.util.regex.Pattern;
 import java.util.List;
+
 public class Converter {
     private static Stack<Character> stack = new Stack<>();
 
@@ -69,21 +70,22 @@ public class Converter {
         }
         return stringBuilder.toString();
     }
-    public static String binaryToOctal(String number)
-    {
+
+    public static String binaryToOctal(String number) {
         StringBuilder answer = new StringBuilder();
-        numeralSystemCheck(number,2);
-        List<String> binarys = frontZeroAdd(number,8);
-        for(String binary:binarys){
+        if (!numeralSystemCheck(number, 2))
+            throw new IllegalArgumentException("2진수 값이 아닙니다.");
+        List<String> binarys = frontZeroAdd(number, 8);
+        for (String binary : binarys) {
             int reslut = 0;
-            int base =4;
-            for(char c :binary.toCharArray()){
+            int base = 4;
+            for (char c : binary.toCharArray()) {
 //                System.out.println("base : "+base);
-                if(c=='1'){
-                    reslut+=base;
-                    base/=2;
-                }else{
-                    base/=2;
+                if (c == '1') {
+                    reslut += base;
+                    base /= 2;
+                } else {
+                    base /= 2;
                 }
 //                System.out.println("reslut : "+reslut);
             }
@@ -92,8 +94,9 @@ public class Converter {
         }
         return answer.toString();
     }
+
     private static int base(Character c) {
-        System.out.println((int) c);
+//        System.out.println((int) c);
         if ((int) c <= 57) {
             return 48;
         } else if ((int) c <= 70) return 55;
@@ -102,7 +105,7 @@ public class Converter {
         }
     }
 
-//    public void octalToBinary(){
+    //    public void octalToBinary(){
 //
 //    }
 //    public void binaryToHexadecimal(){
@@ -122,6 +125,7 @@ public class Converter {
             stack.add(a);
         }
     }
+
     public static boolean numeralSystemCheck(String value, int numeralSystem) {
         if (numeralSystem == 2) return binaryCheck(value);
         else if (numeralSystem == 8) return octalCheck(value);
@@ -130,7 +134,7 @@ public class Converter {
     }
 
     public static boolean numeralSystemCheck(int numeralSystem) {
-        System.out.println(numeralSystem);
+        //System.out.println(numeralSystem);
         if ((numeralSystem == 2 || numeralSystem == 8 || numeralSystem == 16))
             return true;
         return false;
@@ -158,38 +162,39 @@ public class Converter {
             return (char) (num + '0');
         return (char) (num - 10 + 'A');
     }
-    private static List<String> frontZeroAdd(String number, int numeralSystem)
-    {
+
+    private static List<String> frontZeroAdd(String number, int numeralSystem) {
         StringBuilder stringBuilder = new StringBuilder();
-        if(numeralSystem==8) {
+        if (numeralSystem == 8) {
             if (number.length() % 3 == 1)
                 stringBuilder.append("00");
             else if (number.length() % 3 == 2)
                 stringBuilder.append("0");
-        }else if(numeralSystem==16){
-            if(number.length()%4==3)
+        } else if (numeralSystem == 16) {
+            if (number.length() % 4 == 3)
                 stringBuilder.append("000");
             else if (number.length() % 4 == 2)
                 stringBuilder.append("00");
             else if (number.length() % 4 == 1)
                 stringBuilder.append("0");
         }
-        int base = (int)Math.ceil(Math.sqrt( numeralSystem));
+        int base = (int) Math.ceil(Math.sqrt(numeralSystem));
         stringBuilder.append(number);
 //        System.out.println(stringBuilder);
-        List<String> result = splitString(stringBuilder.toString(),base);
+        List<String> result = splitString(stringBuilder.toString(), base);
 //        for(String a:result)
 //        {
 //            System.out.println("t"+a);
 //        }
-       return result;
+        return result;
     }
-    public static List<String> splitString(String input,int size) {
-        System.out.println(input);
+
+    public static List<String> splitString(String input, int size) {
+        //System.out.println(input);
         List<String> result = new ArrayList<>();
         for (int i = 0; i < input.length(); i += size) {
 //            System.out.println("길이" + input.length());
-            int endIndex = Math.min(i+size, input.length()); // 문자열 끝을 벗어나지 않도록 주의
+            int endIndex = Math.min(i + size, input.length()); // 문자열 끝을 벗어나지 않도록 주의
 //            System.out.println("end : "+endIndex);
             String c = input.substring(i, endIndex);
 //            System.out.println(c);
