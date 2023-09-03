@@ -89,9 +89,12 @@ public class Converter {
                 }
 //                System.out.println("reslut : "+reslut);
             }
-
-            answer.append(reslut);
+            if(intToHexa(reslut)=='0')
+                continue;
+            answer.append(intToHexa(reslut));
         }
+        if(answer.length()==0)
+            return "0";
         return answer.toString();
     }
 
@@ -105,21 +108,83 @@ public class Converter {
         }
     }
 
-    //    public void octalToBinary(){
-//
-//    }
-//    public void binaryToHexadecimal(){
-//
-//    }
-//    public void hexadecimalToBinary(){
-//
-//    }
-//    public void octalToHexadecimal() {
-//
-//    }
-//    public void hexadecimalToOctal() {
-//
-//    }
+        public static String octalToBinary(String number){
+            StringBuilder answer = new StringBuilder();
+            if (!numeralSystemCheck(number, 8))
+                throw new IllegalArgumentException("8진수 값이 아닙니다.");
+            for(char c:number.toCharArray()){
+                int value =Integer.parseInt(String.valueOf(c));
+                StringBuilder stringBuilder = new StringBuilder();
+                while(value!=0){
+                    stringBuilder.append(value%2);
+                    value/=2;
+                }
+                for(String a :frontZeroAdd(stringBuilder.reverse().toString(),8))
+                    answer.append(a);
+            }
+            if(answer.length()==0)
+                return "0";
+            return answer.toString();
+    }
+    public static String binaryToHexadecimal(String number){
+        StringBuilder answer = new StringBuilder();
+        if (!numeralSystemCheck(number, 16))
+            throw new IllegalArgumentException("16진수 값이 아닙니다.");
+        List<String> binarys = frontZeroAdd(number, 16);
+        for (String binary : binarys) {
+            System.out.println(binary);
+            int reslut = 0;
+            int base = 8;
+            for (char c : binary.toCharArray()) {
+//                System.out.println("base : "+base);
+                if (c == '1') {
+                    reslut += base;
+                    base /= 2;
+                } else {
+                    base /= 2;
+                }
+//                System.out.println("reslut : "+reslut);
+            }
+            if(intToHexa(reslut)=='0')
+                continue;
+            answer.append(intToHexa(reslut));
+        }
+        if(answer.length()==0)
+            return "0";
+        return answer.toString();
+    }
+    public static String hexadecimalToBinary(String number){
+        StringBuilder answer = new StringBuilder();
+        if (!numeralSystemCheck(number, 16))
+            throw new IllegalArgumentException("16진수 값이 아닙니다.");
+        for(char c:number.toCharArray()){
+            int value=0;
+            if(c=='F'||c=='E'||c=='D'||c=='C'||c=='B'||c=='A')
+            {
+                value = c-55;
+                System.out.println(value);
+            }
+            else {
+                value = Integer.parseInt(String.valueOf(c));
+            }
+            StringBuilder stringBuilder = new StringBuilder();
+            while(value!=0){
+                stringBuilder.append(value%2);
+                value/=2;
+            }
+            for(String a :frontZeroAdd(stringBuilder.reverse().toString(),16))
+                answer.append(a);
+        }
+        if(answer.length()==0)
+            return "0";
+        return answer.toString();
+    }
+    public static String octalToHexadecimal(String number) {
+       return binaryToHexadecimal(octalToBinary(number));
+    }
+    public static String hexadecimalToOctal(String number) {
+        return binaryToOctal(hexadecimalToBinary(number));
+    }
     private static void stackAdd(String value) {
         for (char a : value.toCharArray()) {
             stack.add(a);
@@ -172,11 +237,11 @@ public class Converter {
                 stringBuilder.append("0");
         } else if (numeralSystem == 16) {
             if (number.length() % 4 == 3)
-                stringBuilder.append("000");
+                stringBuilder.append("0");
             else if (number.length() % 4 == 2)
                 stringBuilder.append("00");
             else if (number.length() % 4 == 1)
-                stringBuilder.append("0");
+                stringBuilder.append("000");
         }
         int base = (int) Math.ceil(Math.sqrt(numeralSystem));
         stringBuilder.append(number);
